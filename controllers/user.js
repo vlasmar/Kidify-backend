@@ -27,7 +27,7 @@ const signup = async (req, res, next) => {
         body: { first_name, last_name, email, username, password, user_img_url, date_of_birth, role },
     } = req;
 
-    const user = await User.findOne({username});
+    const user = await User.findOne({username}).populate("role");
     if (user) throw new ErrorResponse("username already exists", 400);
     const hash = await bcrypt.hash(password, 5);
     const newUser = await User.create({ first_name, last_name, email, username, password : hash, user_img_url, date_of_birth, role });
@@ -51,8 +51,8 @@ const createUser = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
     try{
-        const { id } = req.params;
-        const user = await User.findById(id).populate("favorites");
+        const { username } = req.params;
+        const user = await User.findOne({username}).populate("role");
         res.json(user);
     } catch (error) {
         next(new ErrorResponse(error.message));

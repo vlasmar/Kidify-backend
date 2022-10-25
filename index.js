@@ -16,7 +16,7 @@ app.use(cors({
 }));
 app.use("/videos", videoRouter);
 app.use("/auth", authRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 app.use(errorHandler);
 
 app.listen(port, () => {
