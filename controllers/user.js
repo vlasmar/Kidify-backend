@@ -15,7 +15,11 @@ const login = async (req, res, next) => {
         if (!match) throw new ErrorResponse("Username or password are incorrect", 401);
         const payload = {username: user.username, id: user._id};
     const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: "580m", });
-    res.json(token);
+        
+      res.cookie("access_token", token, {
+            maxAge: 1000 * 60 * 60 * 8,
+            httpOnly: true,
+        }).json(payload);
     } catch (error) {
         next(error);
     }
