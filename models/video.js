@@ -3,7 +3,7 @@ const { Schema, Types, model } = require("mongoose");
 const videoSchema = new Schema({
     title: String,
     artist: String,
-    video_url: String,
+    video_url_id: String,
     video_img_url: { type: String, default: "https://i.stack.imgur.com/PtbGQ.png" },
     short_description: { type: String, required: true },
     category: String,

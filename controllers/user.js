@@ -43,6 +43,11 @@ const signup = async (req, res, next) => {
 }
 }
 
+const logout = async (req, res, next) => {
+    res.clearCookie('access_token');
+    return res.sendStatus(200);
+}
+
 const createUser = async (req, res, next) => {
     try{
         const { body } = req;
@@ -53,10 +58,9 @@ const createUser = async (req, res, next) => {
     }
 }
 
-const getUser = async (req, res, next) => {
+const getProfile = async (req, res, next) => {
     try{
-        const { username } = req.params;
-        const user = await User.findOne({username}).populate("role");
+        const user = await User.findOne({_id: req.user.id}).populate("role");
         res.json(user);
     } catch (error) {
         next(new ErrorResponse(error.message));
@@ -93,13 +97,13 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
-
 module.exports = {
     createUser,
-    getUser,
+    getProfile,
     getUsers,
     updateUser,
     deleteUser,
     login,
     signup,
+    logout,
 };
