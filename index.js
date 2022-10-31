@@ -8,6 +8,7 @@ const { authRouter } = require("./routes/auth");
 const { userRouter } = require("./routes/user");
 const { favoritesRouter } = require("./routes/favorite");
 const { errorHandler } = require("./middlewares/errorHandler");
+const { playlistRouter } = require("./routes/playlist");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -26,6 +27,7 @@ app.use("/videos", videoRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/users/profile/favorites", favoritesRouter);
+app.use("/users/profile/playlists", playlistRouter);
 app.use(errorHandler);
 
 app.listen(port, () => {
