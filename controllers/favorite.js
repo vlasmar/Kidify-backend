@@ -9,7 +9,7 @@ const getFavorites = async (req, res, next) => {
     if (user.favorites.length !== 0){
       res.json(user.favorites);
     } else {
-      res.json({"message": "Favorites list is empty"})
+      res.send({"message": "Favorites list is empty"})
     }
 } catch (error) {
     next(new ErrorResponse(error.message));
