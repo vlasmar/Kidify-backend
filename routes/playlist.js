@@ -6,7 +6,7 @@ const playlistRouter = express.Router();
 
 playlistRouter.get("/:playlist_id", verifyToken, getPlaylist);
 playlistRouter.get("/", verifyToken, getPlaylists);
-playlistRouter.post("/", verifyToken, createPlaylist);
+playlistRouter.post("/create-playlist", verifyToken, createPlaylist);
 playlistRouter.put("/edit/:id", verifyToken, editPlaylist);
 playlistRouter.put("/add-video", verifyToken, addToPlaylist);
 playlistRouter.post("/remove-video", verifyToken, removeFromPlaylist);

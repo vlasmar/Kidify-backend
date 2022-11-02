@@ -6,11 +6,7 @@ const { ErrorResponse } = require("../utils/errorResponse");
 const getFavorites = async (req, res, next) => {
   try{
     const user = await User.findOne({_id: req.user.id}).populate("favorites");
-    if (user.favorites.length !== 0){
       res.json(user.favorites);
-    } else {
-      res.send({"message": "Favorites list is empty"})
-    }
 } catch (error) {
     next(new ErrorResponse(error.message));
 }

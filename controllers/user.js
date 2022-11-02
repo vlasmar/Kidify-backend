@@ -97,6 +97,16 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
+const forgotPassword = async (req, res, next) => {
+    try{
+        const { id } = req.params;
+        const user = await User.findByIdAndDelete(id);
+        res.json(user);
+    } catch (error) {
+        next(new ErrorResponse(error.message));
+    }
+}
+
 module.exports = {
     createUser,
     getProfile,
@@ -106,4 +116,5 @@ module.exports = {
     login,
     signup,
     logout,
+    forgotPassword,
 };

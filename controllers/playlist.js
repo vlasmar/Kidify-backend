@@ -16,11 +16,7 @@ const getPlaylist = async (req, res, next) => {
 const getPlaylists = async (req, res, next) => {
     try {
       const user = await User.findOne({_id: req.user.id}).populate("playlists");
-      if (user.playlists.length !== 0){
-        res.json(user.playlists);
-      } else {
-        res.send({"message": "No playlist"})
-      }
+      res.json(user.playlists);
     } catch (error) {
       next(new ErrorResponse(error.message));
     }
@@ -61,8 +57,9 @@ const editPlaylist = async (req, res, next) => {
 
 const addToPlaylist = async (req, res, next) => {
   try {
-    const playlist = await Playlist.findById(req.body.playlistId);
-    const user = await User.findById(req.user._id);
+    const playlist = await Playlist.findById(req.body._id);
+    const user = await User.findOne({ _id: req.user.id }).populate("playlists");
+    console.log(playlist, user)
     if (!user._id.equals(playlist.user))
       return res.status(403).send({ message: "User don't have access to add" });
     if (playlist.videos.indexOf(req.body.videoId) === -1) {
